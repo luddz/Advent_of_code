@@ -19,7 +19,7 @@ if __name__ == '__main__':
     input_lines = []
     file = test_input if not args.example else example_input
     with open(file, 'r') as f:
-        input_lines = f.readlines()
+        input_lines = [l.strip() for l in f.readlines()]
     
     print("------------------------------------------------------------")
     print("Part 1")
