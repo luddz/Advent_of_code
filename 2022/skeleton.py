@@ -5,10 +5,10 @@ from dataclasses import dataclass
 example_input = "example.txt"
 test_input = "test.txt"
 
-def part_1():
+def part_1(input_lines):
     return
 
-def part_2():
+def part_2(input_lines):
     return
 
 if __name__ == '__main__':
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     
     print("------------------------------------------------------------")
     print("Part 1")
-    part_1()
+    part_1(input_lines)
 
     print("------------------------------------------------------------")
     print("Part 2")
-    part_2()
+    part_2(input_lines)
