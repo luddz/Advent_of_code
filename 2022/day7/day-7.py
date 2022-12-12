@@ -10,7 +10,6 @@ class File:
     size: int
     name: str
 
-
 @dataclass
 class Director:
     name: str
@@ -39,7 +38,7 @@ def handle_cmd(line):
                 if f == cmd[2]:
                     tmp = v
 
-    
+
 total_dir_size = 0
 def get_dir_file_size(dir):
     global total_dir_size
@@ -53,7 +52,6 @@ def get_dir_file_size(dir):
     dir.size = total_size
     if dir.size <= 100000:
         total_dir_size += dir.size
-        print(f"Dir: {dir.name} --- {dir.size}")
     return total_size
 
 
@@ -76,20 +74,31 @@ def part_1(input_lines):
                     tmp.files[l[1]] = f
     
     print("------------------------------------------------------------")
-    #Time to itterate the file system:
-    print("Going back to parent")
     a = tmp
     while(a.name != "/"):
-        print (a.name)
         a = a.parent
-
-    print(f"files in root: {len(a.files.keys())}")
     get_dir_file_size(a)
     print(f"{total_dir_size = }")
+    part_2(a)
     return
 
+tot_space = 70000000
+smalest_dir_to_del = Director("", {}, tot_space, None)
+def find_smallest_to_remove(dir, to_del):
+    global smalest_dir_to_del
+    for _, v in dir.files.items():
+        if type(v) is Director:
+            if v.size >= to_del and v.size < smalest_dir_to_del.size and v.name != smalest_dir_to_del.name:
+                smalest_dir_to_del = v
+            find_smallest_to_remove(v, to_del)
 
-def part_2(input_lines):
+def part_2(fs):
+    print("------------------------------------------------------------")
+    print("Part 2")
+    needed_space = 30000000
+    to_del = needed_space - (tot_space - fs.size)
+    find_smallest_to_remove(fs, to_del)
+    print(f"{smalest_dir_to_del.name } -- {smalest_dir_to_del.size}")
     return
 
 if __name__ == '__main__':
@@ -105,7 +114,4 @@ if __name__ == '__main__':
     print("------------------------------------------------------------")
     print("Part 1")
     part_1(input_lines)
-
-    print("------------------------------------------------------------")
-    print("Part 2")
-    part_2(input_lines)
+    # part_2(input_lines)
