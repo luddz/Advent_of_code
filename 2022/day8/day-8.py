@@ -58,7 +58,50 @@ def part_2(input_lines):
         tree_height_map.append([int(l) for l in line])
         scenic_score.append([1 for _ in line])
 
+    sc = find_scenic_score(tree_height_map, scenic_score)
     return
+
+
+def find_scenic_score(tree_map, scenic_score):
+    
+    mat_h = len(tree_map)
+    max = 0
+    for i, line in enumerate(tree_map):
+        for j, tree_h in enumerate(line):
+            shorter_trees_top = 0 
+            shorter_trees_bottom = 0
+            shorter_trees_left = 0
+            shorter_trees_right = 0
+            
+            for a in range(i-1, -1, -1):
+                shorter_trees_top += 1
+                if tree_map[a][j] >= tree_h:
+                    break
+
+            for a in range(i+1, mat_h):
+                shorter_trees_bottom += 1
+                if tree_map[a][j] >= tree_h:
+                    break
+
+            for a in range(j-1, -1, -1):
+                shorter_trees_left += 1
+                if tree_map[i][a] >= tree_h:
+                    break
+                
+            for a in range(j+1, len(line)):
+                shorter_trees_right += 1
+                if tree_map[i][a] >= tree_h:
+                    break
+            
+            sc =  shorter_trees_left * shorter_trees_top * shorter_trees_right * shorter_trees_bottom
+            if sc > max: 
+                max = sc
+    
+    print(f"Max Scenic score: {max}")
+
+    return scenic_score
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
