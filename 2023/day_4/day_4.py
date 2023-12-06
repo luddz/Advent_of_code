@@ -46,7 +46,7 @@ def part_2(input_lines: list[str]) -> None:
         n1, n2 = numbers.split("|")
         cards.append(([*filter(None, n1.split(" "))], [*filter(None, n2.split(" "))]))
     total_cards = 0
-    for idx in range(len(cards)): 
+    for idx in range(len(cards)):
         total_cards += inner_recursion(cards, idx)
 
     print(f"{total_cards = }")
